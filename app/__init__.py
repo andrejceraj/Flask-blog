@@ -8,22 +8,29 @@ from flask_bootstrap import Bootstrap
 from flask_moment import Moment
 
 
-
 app = Flask(__name__)
 app.config.from_object(Config)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 login = LoginManager(app)
-login.login_view = 'login'
+login.login_view = 'auth.login'
+login.login_message = 'Please log in to access this page.'
 mail = Mail(app)
 bootstrap = Bootstrap(app)
 moment = Moment(app)
 
-from app import routes, models, errors
+from app.main import routes
 
 import logging
 from logging.handlers import RotatingFileHandler
 import os
+from app.errors import bp as error_bp
+from app.auth import bp as auth_bp
+from app.main import bp as main_bp
+
+app.register_blueprint(error_bp)
+app.register_blueprint(auth_bp, url_prefix='/auth')
+app.register_blueprint(main_bp)
 
 if not app.debug:
     if not os.path.exists('logs'):
