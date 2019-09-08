@@ -53,6 +53,7 @@ def register():
 
 @bp.route('/reset_password_request', methods=['GET', 'POST'])
 def reset_password_request():
+    print("resetting password")
     if current_user.is_authenticated:
         return redirect(url_for('main.index'))
     form = ResetPasswordRequestForm()
