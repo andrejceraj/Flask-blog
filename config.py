@@ -18,3 +18,4 @@ class Config(object):
     ADMINS = ['andrej.ceraj@gmail.com']
     POSTS_PER_PAGE = 5
     ELASTICSEARCH_URL = os.environ.get('ELASTICSEARCH_URL')
+    REDIS_URL = os.environ.get('REDIS_URL') or 'redis://'
